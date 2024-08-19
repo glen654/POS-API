@@ -1,0 +1,2 @@
+12:08:36.962 [RMI TCP Connection(4)-127.0.0.1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+12:27:43.334 [RMI TCP Connection(2)-127.0.0.1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
