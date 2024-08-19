@@ -1,13 +1,14 @@
 package lk.ijse.posapi.util;
 
-import java.util.UUID;
-
 public class UtilProcess {
+    private static int counter = 0;
     public static String generateCustomerId(){
-        return UUID.randomUUID().toString();
+        counter++;
+        return String.format("C%03d", counter);
     }
 
     public static String generateItemId(){
-        return UUID.randomUUID().toString();
+        counter++;
+        return String.format("I%03D",counter);
     }
 }
