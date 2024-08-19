@@ -1,11 +1,17 @@
 package lk.ijse.posapi.controller;
 
 
+import jakarta.json.JsonException;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.posapi.bo.CustomerBOImpl;
+import lk.ijse.posapi.dto.CustomerDTO;
+import lk.ijse.posapi.util.UtilProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +42,28 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Save Customer
-        System.out.println("Hello servlet");
+        if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        try(var writer = resp.getWriter()) {
+            Jsonb jsonb = JsonbBuilder.create();
+            CustomerDTO customerDTO = jsonb.fromJson(req.getReader(),CustomerDTO.class);
+            customerDTO.setCusId(UtilProcess.generateCustomerId());
+            var customerBo = new CustomerBOImpl();
+            if(customerBo.saveCustomer(customerDTO,connection)){
+                writer.write("Save Customer Successfully");
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            }else{
+                writer.write("Save Customer failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        }catch (JsonException e){
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
