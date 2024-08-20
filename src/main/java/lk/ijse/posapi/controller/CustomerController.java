@@ -68,7 +68,24 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Update Customer
-        super.doPut(req, resp);
+        if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        try(var writer = resp.getWriter()){
+            var customerId = req.getParameter("id");
+            Jsonb jsonb = JsonbBuilder.create();
+            var updateCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+            if(customerBO.updateCustomer(customerId,updateCustomer,connection)){
+                writer.write("Customer update successful");
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            }else{
+                writer.write("Customer Update Failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        }catch (JsonException e){
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 
     @Override

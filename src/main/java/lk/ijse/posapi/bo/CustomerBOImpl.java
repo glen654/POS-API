@@ -15,4 +15,10 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean saveCustomer(CustomerDTO dto, Connection connection) throws SQLException {
         return customerDAO.save(new Customer(dto.getCustomerId(), dto.getCustomerName(), dto.getCustomerAddress(), dto.getCustomerTel()),connection);
     }
+
+    @Override
+    public boolean updateCustomer(String customerId, CustomerDTO customerDTO, Connection connection) {
+        Customer customer = new Customer(customerId, customerDTO.getCustomerName(), customerDTO.getCustomerAddress(), customerDTO.getCustomerTel());
+        return customerDAO.update(customerId, customer, connection);
+    }
 }
