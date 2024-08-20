@@ -8,3 +8,13 @@
 11:38:13.571 [RMI TCP Connection(2)-127.0.0.1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
 11:42:05.578 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
 12:09:59.695 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:29:37.015 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:36:14.863 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:43:12.083 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:44:08.835 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:49:29.043 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+19:59:59.471 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+20:55:44.740 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+21:04:21.838 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+21:10:19.665 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+21:21:12.401 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method

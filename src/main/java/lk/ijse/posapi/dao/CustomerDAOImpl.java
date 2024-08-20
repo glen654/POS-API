@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CustomerDAOImpl implements CustomerDAO{
-    static String SAVE_CUSTOMER = "INSERT INTO customer (cusId,cusName,cusAddress,cusTel) VALUES (?,?,?,?)";
+    static String SAVE_CUSTOMER = "INSERT INTO customer (customerId,customerName,customerAddress,customerTel) VALUES (?,?,?,?)";
     @Override
     public boolean save(Customer entity, Connection connection) throws SQLException {
         try {
