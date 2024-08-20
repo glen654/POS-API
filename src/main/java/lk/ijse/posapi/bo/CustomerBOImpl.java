@@ -33,4 +33,9 @@ public class CustomerBOImpl implements CustomerBO {
 
         return customerDTO;
     }
+
+    @Override
+    public boolean deleteCustomer(String customerId, Connection connection) {
+        return customerDAO.delete(customerId,connection);
+    }
 }

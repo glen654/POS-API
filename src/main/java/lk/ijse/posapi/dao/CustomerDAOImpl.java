@@ -9,6 +9,7 @@ public class CustomerDAOImpl implements CustomerDAO{
     static String SAVE_CUSTOMER = "INSERT INTO customer (customerId,customerName,customerAddress,customerTel) VALUES (?,?,?,?)";
     static String UPDATE_CUSTOMER = "UPDATE customer SET customerName=?,customerAddress=?,customerTel=? WHERE customerId=?";
     static String GET_CUSTOMER = "SELECT * FROM customer WHERE customerId=?";
+    static String DELETE_CUSTOMER = "DELETE FROM customer WHERE customerId=?";
     @Override
     public boolean save(Customer entity, Connection connection) throws SQLException {
         try {
@@ -55,5 +56,16 @@ public class CustomerDAOImpl implements CustomerDAO{
             e.printStackTrace();
         }
         return customer;
+    }
+
+    @Override
+    public boolean delete(String id, Connection connection) {
+        try {
+            var preparedStatement = connection.prepareStatement(DELETE_CUSTOMER);
+            preparedStatement.setString(1,id);
+            return preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

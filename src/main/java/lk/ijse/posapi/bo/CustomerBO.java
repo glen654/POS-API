@@ -10,4 +10,5 @@ public interface CustomerBO extends SuperBO{
 
     boolean updateCustomer(String customerId,CustomerDTO customerDTO,Connection connection);
     CustomerDTO getCustomer(String customerId, Connection connection) throws SQLException;
+    boolean deleteCustomer(String customerId,Connection connection);
 }
