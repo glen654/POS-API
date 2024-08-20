@@ -21,4 +21,16 @@ public class CustomerBOImpl implements CustomerBO {
         Customer customer = new Customer(customerId, customerDTO.getCustomerName(), customerDTO.getCustomerAddress(), customerDTO.getCustomerTel());
         return customerDAO.update(customerId, customer, connection);
     }
+
+    @Override
+    public CustomerDTO getCustomer(String customerId, Connection connection) throws SQLException {
+        Customer customer = customerDAO.get(customerId,connection);
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setCustomerId(customer.getCustomerId());
+        customerDTO.setCustomerName(customer.getCustomerName());
+        customerDTO.setCustomerAddress(customer.getCustomerAddress());
+        customerDTO.setCustomerTel(customer.getCustomerTel());
+
+        return customerDTO;
+    }
 }

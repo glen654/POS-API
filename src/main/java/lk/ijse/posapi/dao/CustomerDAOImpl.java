@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class CustomerDAOImpl implements CustomerDAO{
     static String SAVE_CUSTOMER = "INSERT INTO customer (customerId,customerName,customerAddress,customerTel) VALUES (?,?,?,?)";
     static String UPDATE_CUSTOMER = "UPDATE customer SET customerName=?,customerAddress=?,customerTel=? WHERE customerId=?";
+    static String GET_CUSTOMER = "SELECT * FROM customer WHERE customerId=?";
     @Override
     public boolean save(Customer entity, Connection connection) throws SQLException {
         try {
@@ -35,5 +36,24 @@ public class CustomerDAOImpl implements CustomerDAO{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Customer get(String id, Connection connection) throws SQLException {
+        var customer = new Customer();
+        try {
+            var preparedStatement = connection.prepareStatement(GET_CUSTOMER);
+            preparedStatement.setString(1,id);
+            var resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                customer.setCustomerId(resultSet.getString("customerId"));
+                customer.setCustomerName(resultSet.getString("customerName"));
+                customer.setCustomerAddress(resultSet.getString("customerAddress"));
+                customer.setCustomerTel(resultSet.getString("customerTel"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return customer;
     }
 }
