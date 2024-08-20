@@ -11,10 +11,10 @@ public class CustomerDAOImpl implements CustomerDAO{
     public boolean save(Customer entity, Connection connection) throws SQLException {
         try {
             var preparedStatement = connection.prepareStatement(SAVE_CUSTOMER);
-            preparedStatement.setString(1,entity.getCusId());
-            preparedStatement.setString(2,entity.getCusName());
-            preparedStatement.setString(3,entity.getCusAddress());
-            preparedStatement.setString(4,entity.getCusTel());
+            preparedStatement.setString(1,entity.getCustomerId());
+            preparedStatement.setString(2,entity.getCustomerName());
+            preparedStatement.setString(3,entity.getCustomerAddress());
+            preparedStatement.setString(4,entity.getCustomerTel());
             return preparedStatement.executeUpdate() != 0;
         }catch (SQLException e){
             throw new RuntimeException(e);

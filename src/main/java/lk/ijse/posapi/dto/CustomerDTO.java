@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CustomerDTO {
-    private String cusId;
-    private String cusName;
-    private String cusAddress;
-    private String cusTel;
+    private String customerId;
+    private String customerName;
+    private String customerAddress;
+    private String customerTel;
 }

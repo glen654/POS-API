@@ -8,11 +8,11 @@ import lk.ijse.posapi.entity.Customer;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CustomerBOImpl implements CustomerBO{
+public class CustomerBOImpl implements CustomerBO {
 
     CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
     @Override
     public boolean saveCustomer(CustomerDTO dto, Connection connection) throws SQLException {
-        return customerDAO.save(new Customer(dto.getCusId(), dto.getCusName(), dto.getCusAddress(), dto.getCusTel()),connection);
+        return customerDAO.save(new Customer(dto.getCustomerId(), dto.getCustomerName(), dto.getCustomerAddress(), dto.getCustomerTel()),connection);
     }
 }

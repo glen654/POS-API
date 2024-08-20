@@ -9,7 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lk.ijse.posapi.bo.CustomerBOImpl;
+import lk.ijse.posapi.bo.BOFactory;
+import lk.ijse.posapi.bo.CustomerBO;
 import lk.ijse.posapi.dto.CustomerDTO;
 import lk.ijse.posapi.util.UtilProcess;
 import org.slf4j.Logger;
@@ -22,8 +23,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/customer", loadOnStartup = 2)
+@WebServlet(urlPatterns = "/customer")
 public class CustomerController extends HttpServlet {
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBo(BOFactory.BOTypes.CUSTOMER);
     static Logger logger = LoggerFactory.getLogger(CustomerController.class);
     Connection connection;
     @Override
@@ -49,19 +51,16 @@ public class CustomerController extends HttpServlet {
         try(var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(),CustomerDTO.class);
-            customerDTO.setCusId(UtilProcess.generateCustomerId());
-            var customerBo = new CustomerBOImpl();
-            if(customerBo.saveCustomer(customerDTO,connection)){
-                writer.write("Save Customer Successfully");
+            customerDTO.setCustomerId(UtilProcess.generateCustomerId());
+            if(customerBO.saveCustomer(customerDTO,connection)){
+                writer.write("Customer Save Successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else{
-                writer.write("Save Customer failed");
+                writer.write("Customer Save Unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
-        }catch (JsonException e){
+        }catch (JsonException | SQLException e){
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
