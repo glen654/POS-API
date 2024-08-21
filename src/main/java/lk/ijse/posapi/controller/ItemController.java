@@ -69,6 +69,16 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Get Item
+        var itemCode = req.getParameter("id");
+        try(var writer = resp.getWriter()) {
+            var item = itemBO.getItem(itemCode,connection);
+            System.out.println(item);
+            resp.setContentType("application/json");
+            var jsonb = JsonbBuilder.create();
+            jsonb.toJson(item,writer);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -97,5 +107,18 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Item
+        var itemCode = req.getParameter("id");
+        try(var writer = resp.getWriter()){
+            if(itemBO.deleteItem(itemCode,connection)){
+                writer.write("Delete Successful");
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            }else{
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Delete failed");
+            }
+        }catch (Exception e){
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
     }
 }
