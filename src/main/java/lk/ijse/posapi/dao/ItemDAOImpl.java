@@ -1,6 +1,5 @@
 package lk.ijse.posapi.dao;
 
-import lk.ijse.posapi.entity.Customer;
 import lk.ijse.posapi.entity.Item;
 
 import java.sql.Connection;

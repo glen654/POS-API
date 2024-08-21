@@ -17,16 +17,24 @@ public class ItemBOImpl implements ItemBO{
 
     @Override
     public boolean updateItem(String itemCode, ItemDTO itemDTO, Connection connection) {
-        return false;
+        Item item = new Item(itemCode,itemDTO.getItemName(),itemDTO.getQtyOnHand(),itemDTO.getUnitPrice());
+        return itemDAO.update(itemCode,item,connection);
     }
 
     @Override
     public ItemDTO getItem(String itemCode, Connection connection) throws SQLException {
-        return null;
+        Item item = itemDAO.get(itemCode,connection);
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setItemCode(item.getItemCode());
+        itemDTO.setItemName(item.getItemName());
+        itemDTO.setQtyOnHand(item.getQtyOnHand());
+        itemDTO.setUnitPrice(item.getUnitPrice());
+
+        return itemDTO;
     }
 
     @Override
     public boolean deleteItem(String itemCode, Connection connection) {
-        return false;
+        return itemDAO.delete(itemCode,connection);
     }
 }
