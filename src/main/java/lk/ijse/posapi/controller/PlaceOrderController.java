@@ -11,6 +11,7 @@ import lk.ijse.posapi.bo.BOFactory;
 import lk.ijse.posapi.bo.custom.OrderBO;
 import lk.ijse.posapi.dto.OrderDTO;
 import lk.ijse.posapi.dto.OrderDetailDTO;
+import lk.ijse.posapi.dto.OrderRequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,6 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/order")
@@ -51,8 +51,16 @@ public class PlaceOrderController extends HttpServlet {
 
         try {
             Jsonb jsonb = JsonbBuilder.create();
-            OrderDTO orderDTO = jsonb.fromJson(req.getReader(), OrderDTO.class);
-            List<OrderDetailDTO> orderDetailDTOs = jsonb.fromJson(req.getReader(), new ArrayList<OrderDetailDTO>(){}.getClass().getGenericSuperclass());
+            OrderRequestDTO orderRequestDTO = jsonb.fromJson(req.getReader(), OrderRequestDTO.class);
+            System.out.println("deserialized orderrequestdto:" + orderRequestDTO);
+
+            if (orderRequestDTO == null || orderRequestDTO.getOrderDTO() == null || orderRequestDTO.getOrderDetailDTOS() == null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid order data");
+                return;
+            }
+
+            OrderDTO orderDTO = orderRequestDTO.getOrderDTO();
+            List<OrderDetailDTO> orderDetailDTOs = orderRequestDTO.getOrderDetailDTOS();
 
             boolean orderPlaced = orderBO.placeOrder(orderDTO, orderDetailDTOs, connection);
 
