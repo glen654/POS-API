@@ -9,6 +9,6 @@ public class UtilProcess {
 
     public static String generateItemId(){
         counter++;
-        return String.format("I%03D",counter);
+        return String.format("I%03d",counter);
     }
 }
