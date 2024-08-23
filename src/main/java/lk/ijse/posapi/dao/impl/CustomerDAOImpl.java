@@ -1,11 +1,12 @@
-package lk.ijse.posapi.dao;
+package lk.ijse.posapi.dao.impl;
 
+import lk.ijse.posapi.dao.custom.CustomerDAO;
 import lk.ijse.posapi.entity.Customer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CustomerDAOImpl implements CustomerDAO{
+public class CustomerDAOImpl implements CustomerDAO {
     static String SAVE_CUSTOMER = "INSERT INTO customer (customerId,customerName,customerAddress,customerTel) VALUES (?,?,?,?)";
     static String UPDATE_CUSTOMER = "UPDATE customer SET customerName=?,customerAddress=?,customerTel=? WHERE customerId=?";
     static String GET_CUSTOMER = "SELECT * FROM customer WHERE customerId=?";

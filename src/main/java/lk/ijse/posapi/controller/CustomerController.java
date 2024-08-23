@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.posapi.bo.BOFactory;
-import lk.ijse.posapi.bo.CustomerBO;
+import lk.ijse.posapi.bo.custom.CustomerBO;
 import lk.ijse.posapi.dto.CustomerDTO;
 import lk.ijse.posapi.util.UtilProcess;
 import org.slf4j.Logger;

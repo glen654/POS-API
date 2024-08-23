@@ -1,6 +1,7 @@
-package lk.ijse.posapi.bo;
+package lk.ijse.posapi.bo.impl;
 
-import lk.ijse.posapi.dao.CustomerDAO;
+import lk.ijse.posapi.bo.custom.CustomerBO;
+import lk.ijse.posapi.dao.custom.CustomerDAO;
 import lk.ijse.posapi.dao.DAOFactory;
 import lk.ijse.posapi.dto.CustomerDTO;
 import lk.ijse.posapi.entity.Customer;

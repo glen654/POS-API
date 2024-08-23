@@ -1,14 +1,15 @@
-package lk.ijse.posapi.bo;
+package lk.ijse.posapi.bo.impl;
 
+import lk.ijse.posapi.bo.custom.ItemBO;
 import lk.ijse.posapi.dao.DAOFactory;
-import lk.ijse.posapi.dao.ItemDAO;
+import lk.ijse.posapi.dao.custom.ItemDAO;
 import lk.ijse.posapi.dto.ItemDTO;
 import lk.ijse.posapi.entity.Item;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ItemBOImpl implements ItemBO{
+public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
     public boolean saveItem(ItemDTO dto, Connection connection) throws SQLException {

@@ -1,11 +1,12 @@
-package lk.ijse.posapi.dao;
+package lk.ijse.posapi.dao.impl;
 
+import lk.ijse.posapi.dao.custom.ItemDAO;
 import lk.ijse.posapi.entity.Item;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ItemDAOImpl implements ItemDAO{
+public class ItemDAOImpl implements ItemDAO {
     static String SAVE_ITEM = "INSERT INTO item (itemCode,itemName,qtyOnHand,unitPrice) VALUES (?,?,?,?)";
     static String UPDATE_ITEM = "UPDATE item SET itemName=?,qtyOnHand=?,unitPrice=? WHERE itemCode=?";
     static String GET_ITEM = "SELECT * FROM item WHERE itemCode=?";

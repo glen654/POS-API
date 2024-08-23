@@ -1,5 +1,8 @@
 package lk.ijse.posapi.dao;
 
+import lk.ijse.posapi.dao.impl.CustomerDAOImpl;
+import lk.ijse.posapi.dao.impl.ItemDAOImpl;
+
 public class DAOFactory {
     private static DAOFactory daoFactory;
 
