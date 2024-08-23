@@ -41,7 +41,6 @@ public class OrderBOImpl implements OrderBO {
                 }
             }
 
-            // Commit the transaction
             connection.commit();
             return true;
 
