@@ -6,11 +6,12 @@ import lk.ijse.posapi.dto.ItemDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface ItemBO extends SuperBO {
     boolean saveItem(ItemDTO dto, Connection connection) throws SQLException;
 
     boolean updateItem(String itemCode,ItemDTO itemDTO,Connection connection);
-    ItemDTO getItem(String itemCode, Connection connection) throws SQLException;
+    List<ItemDTO> getItem(Connection connection) throws SQLException;
     boolean deleteItem(String itemCode,Connection connection);
 }

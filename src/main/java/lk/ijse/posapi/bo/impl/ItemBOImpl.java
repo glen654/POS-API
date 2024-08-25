@@ -8,6 +8,8 @@ import lk.ijse.posapi.entity.Item;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
@@ -23,15 +25,19 @@ public class ItemBOImpl implements ItemBO {
     }
 
     @Override
-    public ItemDTO getItem(String itemCode, Connection connection) throws SQLException {
-        Item item = itemDAO.get(itemCode,connection);
-        ItemDTO itemDTO = new ItemDTO();
-        itemDTO.setItemCode(item.getItemCode());
-        itemDTO.setItemName(item.getItemName());
-        itemDTO.setQtyOnHand(item.getQtyOnHand());
-        itemDTO.setUnitPrice(item.getUnitPrice());
+    public List<ItemDTO> getItem(Connection connection) throws SQLException {
+        List<Item> items = itemDAO.get(connection);
+        List<ItemDTO> itemDTOS = new ArrayList<>();
 
-        return itemDTO;
+        for(Item item : items){
+            ItemDTO itemDTO = new ItemDTO();
+            itemDTO.setItemCode(item.getItemCode());
+            itemDTO.setItemName(item.getItemName());
+            itemDTO.setQtyOnHand(item.getQtyOnHand());
+            itemDTO.setUnitPrice(item.getUnitPrice());
+            itemDTOS.add(itemDTO);
+        }
+        return itemDTOS;
     }
 
     @Override

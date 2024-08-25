@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/item")
 public class ItemController extends HttpServlet {
@@ -68,9 +69,8 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Get Item
-        var itemCode = req.getParameter("id");
         try(var writer = resp.getWriter()) {
-            var item = itemBO.getItem(itemCode,connection);
+            List<ItemDTO> item = itemBO.getItem(connection);
             System.out.println(item);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
@@ -87,7 +87,7 @@ public class ItemController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try(var writer = resp.getWriter()){
-            var itemCode = req.getParameter("id");
+            var itemCode = req.getParameter("itemCode");
             Jsonb jsonb = JsonbBuilder.create();
             var updateItem = jsonb.fromJson(req.getReader(), ItemDTO.class);
             if(itemBO.updateItem(itemCode,updateItem,connection)){
@@ -106,7 +106,7 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Item
-        var itemCode = req.getParameter("id");
+        var itemCode = req.getParameter("itemCode");
         try(var writer = resp.getWriter()){
             if(itemBO.deleteItem(itemCode,connection)){
                 writer.write("Delete Successful");

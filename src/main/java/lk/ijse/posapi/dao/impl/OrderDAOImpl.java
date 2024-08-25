@@ -5,6 +5,7 @@ import lk.ijse.posapi.entity.Order;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class OrderDAOImpl implements OrderDAO {
@@ -29,7 +30,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order get(String id, Connection connection) throws SQLException {
+    public List<Order> get(Connection connection) throws SQLException {
         return null;
     }
 

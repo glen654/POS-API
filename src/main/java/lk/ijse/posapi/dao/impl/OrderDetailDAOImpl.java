@@ -6,6 +6,7 @@ import lk.ijse.posapi.entity.OrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
     static final String SAVE_ORDER_DETAIL = "INSERT INTO order_details (orderId, itemCode, orderQty, unitPrice) VALUES (?, ?, ?, ?)";
@@ -27,7 +28,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public OrderDetail get(String id, Connection connection) throws SQLException {
+    public List<OrderDetail> get(Connection connection) throws SQLException {
         return null;
     }
 

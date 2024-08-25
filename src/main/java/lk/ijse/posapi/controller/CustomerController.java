@@ -73,7 +73,8 @@ public class CustomerController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try(var writer = resp.getWriter()){
-            var customerId = req.getParameter("id");
+            var customerId = req.getParameter("cusId");
+            System.out.println(customerId);
             Jsonb jsonb = JsonbBuilder.create();
             var updateCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             if(customerBO.updateCustomer(customerId,updateCustomer,connection)){
@@ -112,7 +113,6 @@ public class CustomerController extends HttpServlet {
         //TODO:Get Customer
         try(var writer = resp.getWriter()) {
             List<CustomerDTO> customer = customerBO.getCustomer(connection);
-            System.out.println(customer);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(customer,writer);
