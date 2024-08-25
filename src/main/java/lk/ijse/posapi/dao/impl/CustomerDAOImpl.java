@@ -5,11 +5,13 @@ import lk.ijse.posapi.entity.Customer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     static String SAVE_CUSTOMER = "INSERT INTO customer (customerId,customerName,customerAddress,customerTel) VALUES (?,?,?,?)";
     static String UPDATE_CUSTOMER = "UPDATE customer SET customerName=?,customerAddress=?,customerTel=? WHERE customerId=?";
-    static String GET_CUSTOMER = "SELECT * FROM customer WHERE customerId=?";
+    static String GET_CUSTOMER = "SELECT * FROM customer";
     static String DELETE_CUSTOMER = "DELETE FROM customer WHERE customerId=?";
     @Override
     public boolean save(Customer entity, Connection connection) throws SQLException {
@@ -41,22 +43,23 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer get(String id, Connection connection) throws SQLException {
-        var customer = new Customer();
+    public List<Customer> get(Connection connection) throws SQLException {
+        List<Customer> customers = new ArrayList<>();
         try {
             var preparedStatement = connection.prepareStatement(GET_CUSTOMER);
-            preparedStatement.setString(1,id);
             var resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
+                var customer = new Customer();
                 customer.setCustomerId(resultSet.getString("customerId"));
                 customer.setCustomerName(resultSet.getString("customerName"));
                 customer.setCustomerAddress(resultSet.getString("customerAddress"));
                 customer.setCustomerTel(resultSet.getString("customerTel"));
+                customers.add(customer);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return customer;
+        return customers;
     }
 
     @Override

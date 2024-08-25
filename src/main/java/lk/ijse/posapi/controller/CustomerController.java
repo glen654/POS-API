@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerController extends HttpServlet {
@@ -51,7 +52,7 @@ public class CustomerController extends HttpServlet {
         try(var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(),CustomerDTO.class);
-            customerDTO.setCustomerId(UtilProcess.generateCustomerId());
+//            customerDTO.setCustomerId(UtilProcess.generateCustomerId());
             if(customerBO.saveCustomer(customerDTO,connection)){
                 writer.write("Customer Save Successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -91,7 +92,7 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Customer
-        var customerId = req.getParameter("id");
+        var customerId = req.getParameter("cusId");
         try(var writer = resp.getWriter()){
             if(customerBO.deleteCustomer(customerId,connection)){
                 writer.write("Delete Successful");
@@ -109,9 +110,8 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Get Customer
-        var customerId = req.getParameter("id");
         try(var writer = resp.getWriter()) {
-            var customer = customerBO.getCustomer(customerId,connection);
+            List<CustomerDTO> customer = customerBO.getCustomer(connection);
             System.out.println(customer);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();

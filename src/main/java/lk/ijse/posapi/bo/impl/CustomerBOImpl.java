@@ -8,6 +8,8 @@ import lk.ijse.posapi.entity.Customer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
@@ -24,15 +26,19 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public CustomerDTO getCustomer(String customerId, Connection connection) throws SQLException {
-        Customer customer = customerDAO.get(customerId,connection);
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setCustomerId(customer.getCustomerId());
-        customerDTO.setCustomerName(customer.getCustomerName());
-        customerDTO.setCustomerAddress(customer.getCustomerAddress());
-        customerDTO.setCustomerTel(customer.getCustomerTel());
+    public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
+        List<Customer> customers = customerDAO.get(connection);
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
 
-        return customerDTO;
+        for(Customer customer : customers){
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setCustomerId(customer.getCustomerId());
+            customerDTO.setCustomerName(customer.getCustomerName());
+            customerDTO.setCustomerAddress(customer.getCustomerAddress());
+            customerDTO.setCustomerTel(customer.getCustomerTel());
+            customerDTOS.add(customerDTO);
+        }
+        return customerDTOS;
     }
 
     @Override
