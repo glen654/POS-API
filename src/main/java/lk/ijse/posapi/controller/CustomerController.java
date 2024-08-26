@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.posapi.bo.BOFactory;
 import lk.ijse.posapi.bo.custom.CustomerBO;
 import lk.ijse.posapi.dto.CustomerDTO;
-import lk.ijse.posapi.util.UtilProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +73,6 @@ public class CustomerController extends HttpServlet {
         }
         try(var writer = resp.getWriter()){
             var customerId = req.getParameter("cusId");
-            System.out.println(customerId);
             Jsonb jsonb = JsonbBuilder.create();
             var updateCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             if(customerBO.updateCustomer(customerId,updateCustomer,connection)){

@@ -71,7 +71,6 @@ public class ItemController extends HttpServlet {
         //TODO:Get Item
         try(var writer = resp.getWriter()) {
             List<ItemDTO> item = itemBO.getItem(connection);
-            System.out.println(item);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(item,writer);
