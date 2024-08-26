@@ -51,7 +51,6 @@ public class CustomerController extends HttpServlet {
         try(var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(),CustomerDTO.class);
-//            customerDTO.setCustomerId(UtilProcess.generateCustomerId());
             if(customerBO.saveCustomer(customerDTO,connection)){
                 writer.write("Customer Save Successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
