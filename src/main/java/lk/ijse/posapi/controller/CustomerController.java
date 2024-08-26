@@ -71,7 +71,7 @@ public class CustomerController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try(var writer = resp.getWriter()){
-            var customerId = req.getParameter("cusId");
+            var customerId = req.getParameter("customerId");
             Jsonb jsonb = JsonbBuilder.create();
             var updateCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             if(customerBO.updateCustomer(customerId,updateCustomer,connection)){
@@ -90,7 +90,7 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Customer
-        var customerId = req.getParameter("cusId");
+        var customerId = req.getParameter("customerId");
         try(var writer = resp.getWriter()){
             if(customerBO.deleteCustomer(customerId,connection)){
                 writer.write("Delete Successful");
