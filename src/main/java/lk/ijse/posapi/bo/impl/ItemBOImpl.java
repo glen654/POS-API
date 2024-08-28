@@ -49,7 +49,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean updateItemQuantity(String itemCode, int quantity, Connection connection) throws SQLException {
-        Item item = (Item) itemDAO.get(connection);
+        Item item = itemDAO.getItemByCode(itemCode,connection);
 
         if(item ==null)
 
