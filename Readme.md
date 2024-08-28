@@ -2,6 +2,12 @@
 
 This repository contains the backend API for the Point of Sale (POS) system. The frontend has already been developed, and this backend is designed to integrate seamlessly with it, providing robust, scalable, and secure services to handle the core business logic and data management.
 
+## API Documentation
+https://documenter.getpostman.com/view/36176457/2sAXjJ6tJS
+
+## Pos-System Front-End
+https://github.com/glen654/Pos-System
+
 # Introduction
 
 The POS System is designed to manage customer orders, inventory, and sales efficiently. This backend was developed using Jakarta EE, with a focus on maintaining a proper layered architecture, applying best practices in coding, and ensuring secure database interactions.
