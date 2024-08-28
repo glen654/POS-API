@@ -45,6 +45,7 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Save Item
+        logger.info("Inside of the Item save method");
         if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -55,9 +56,11 @@ public class ItemController extends HttpServlet {
             itemDTO.setItemCode(UtilProcess.generateItemId());
             if(itemBO.saveItem(itemDTO,connection)){
                 writer.write("Item Save Successful");
+                logger.info("Item saved successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else{
                 writer.write("Item Save Unsuccessful");
+                logger.error("Item save unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }catch (JsonException | SQLException e){
@@ -69,12 +72,14 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Get Item
+        logger.info("Inside of the item get method");
         try(var writer = resp.getWriter()) {
             List<ItemDTO> item = itemBO.getItem(connection);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(item,writer);
         } catch (SQLException e) {
+            logger.error("Item get unsuccessful");
             throw new RuntimeException(e);
         }
     }
@@ -82,6 +87,7 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Update Item
+        logger.info("Inside of the item update method");
         if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -91,9 +97,11 @@ public class ItemController extends HttpServlet {
             var updateItem = jsonb.fromJson(req.getReader(), ItemDTO.class);
             if(itemBO.updateItem(itemCode,updateItem,connection)){
                 writer.write("Item update successful");
+                logger.info("Item updated successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else{
                 writer.write("Item Update Failed");
+                logger.error("item update unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }catch (JsonException e){
@@ -105,13 +113,16 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Item
+        logger.info("Inside of the item delete method");
         var itemCode = req.getParameter("itemCode");
         try(var writer = resp.getWriter()){
             if(itemBO.deleteItem(itemCode,connection)){
                 writer.write("Delete Successful");
+                logger.info("Item delete successful");
                 resp.setStatus(HttpServletResponse.SC_ACCEPTED);
             }else{
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                logger.error("Item delete unsuccessful");
                 writer.write("Delete failed");
             }
         }catch (Exception e){
