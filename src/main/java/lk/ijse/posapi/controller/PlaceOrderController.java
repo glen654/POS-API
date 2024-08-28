@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.posapi.bo.BOFactory;
 import lk.ijse.posapi.bo.custom.OrderBO;
+import lk.ijse.posapi.dto.ItemDTO;
 import lk.ijse.posapi.dto.OrderDTO;
 import lk.ijse.posapi.dto.OrderDetailDTO;
 import lk.ijse.posapi.dto.OrderRequestDTO;
@@ -70,6 +71,18 @@ public class PlaceOrderController extends HttpServlet {
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to place order");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try(var writer = resp.getWriter()) {
+            List<OrderRequestDTO> orders = orderBO.getAllOrdersWithDetails(connection);
+            resp.setContentType("application/json");
+            var jsonb = JsonbBuilder.create();
+            jsonb.toJson(orders,writer);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

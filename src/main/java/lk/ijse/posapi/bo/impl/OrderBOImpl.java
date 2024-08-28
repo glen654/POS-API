@@ -9,6 +9,7 @@ import lk.ijse.posapi.dao.custom.OrderDAO;
 import lk.ijse.posapi.dao.custom.OrderDetailDAO;
 import lk.ijse.posapi.dto.OrderDTO;
 import lk.ijse.posapi.dto.OrderDetailDTO;
+import lk.ijse.posapi.dto.OrderRequestDTO;
 import lk.ijse.posapi.entity.Order;
 import lk.ijse.posapi.entity.OrderDetail;
 
@@ -62,5 +63,10 @@ public class OrderBOImpl implements OrderBO {
         } finally {
             connection.setAutoCommit(true);
         }
+    }
+
+    @Override
+    public List<OrderRequestDTO> getAllOrdersWithDetails(Connection connection) throws SQLException {
+        return orderDetailDAO.getAllOrderDetails(connection);
     }
 }
