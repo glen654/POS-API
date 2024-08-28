@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderBOImpl implements OrderBO {
     OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
     OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER_DETAIL);
-    ItemBO itemBO = (ItemBO) BOFactory.getBOFactory().getBo(BOFactory.BOTypes.ITEM);
+    ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
     public boolean placeOrder(OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOs, Connection connection) throws SQLException {
         try {
@@ -45,7 +45,7 @@ public class OrderBOImpl implements OrderBO {
                 }
 
                 //Update Item Quantity
-                boolean itemQuantityUpdated = itemBO.updateItemQuantity(orderDetail.getItemCode(),
+                boolean itemQuantityUpdated = itemDAO.updateQuantity(orderDetail.getItemCode(),
                         orderDetail.getOrderQty(),connection);
                 if(!itemQuantityUpdated){
                     connection.rollback();
