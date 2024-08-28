@@ -46,6 +46,7 @@ public class PlaceOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Save Order
+        logger.info("Inside of the Order save method");
         if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -67,8 +68,10 @@ public class PlaceOrderController extends HttpServlet {
 
             if (orderPlaced) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);
+                logger.info("Order placed successful");
                 resp.getWriter().write("Order placed successfully");
             } else {
+                logger.error("Order place unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to place order");
             }
         } catch (SQLException e) {
@@ -78,12 +81,14 @@ public class PlaceOrderController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("Inside of the order get method");
         try(var writer = resp.getWriter()) {
             List<OrderRequestDTO> orders = orderBO.getAllOrdersWithDetails(connection);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(orders,writer);
         } catch (SQLException e) {
+            logger.error("Order get unsuccessful");
             throw new RuntimeException(e);
         }
     }
