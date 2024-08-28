@@ -44,6 +44,7 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Save Customer
+        logger.info("Inside of the Customer save method");
         if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -53,9 +54,11 @@ public class CustomerController extends HttpServlet {
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(),CustomerDTO.class);
             if(customerBO.saveCustomer(customerDTO,connection)){
                 writer.write("Customer Save Successful");
+                logger.info("Customer saved Successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else{
                 writer.write("Customer Save Unsuccessful");
+                logger.error("Customer save unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }catch (JsonException | SQLException e){
@@ -67,6 +70,7 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Update Customer
+        logger.info("Inside of the Customer update method");
         if(!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -76,9 +80,11 @@ public class CustomerController extends HttpServlet {
             var updateCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             if(customerBO.updateCustomer(customerId,updateCustomer,connection)){
                 writer.write("Customer update successful");
+                logger.info("Customer updated successful");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else{
                 writer.write("Customer Update Failed");
+                logger.error("Customer update unsuccessful");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }catch (JsonException e){
@@ -90,13 +96,16 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Delete Customer
+        logger.info("Inside of the customer delete method");
         var customerId = req.getParameter("customerId");
         try(var writer = resp.getWriter()){
             if(customerBO.deleteCustomer(customerId,connection)){
                 writer.write("Delete Successful");
+                logger.info("Customer delete successful");
                 resp.setStatus(HttpServletResponse.SC_ACCEPTED);
             }else{
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                logger.error("Customer delete unsuccessful");
                 writer.write("Delete failed");
             }
         }catch (Exception e){
@@ -108,12 +117,14 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO:Get Customer
+        logger.info("Inside of the customer get method");
         try(var writer = resp.getWriter()) {
             List<CustomerDTO> customer = customerBO.getCustomer(connection);
             resp.setContentType("application/json");
             var jsonb = JsonbBuilder.create();
             jsonb.toJson(customer,writer);
         } catch (SQLException e) {
+            logger.error("Customer get unsuccessful");
             throw new RuntimeException(e);
         }
     }
