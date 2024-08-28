@@ -51,17 +51,13 @@ public class ItemBOImpl implements ItemBO {
     public boolean updateItemQuantity(String itemCode, int quantity, Connection connection) throws SQLException {
         Item item = itemDAO.getItemByCode(itemCode,connection);
 
-        if(item ==null)
-
-        {
+        if(item ==null) {
             throw new SQLException("Item not found with code: " + itemCode);
         }
 
         int newQuantity = item.getQtyOnHand() - quantity ;
 
-        if(newQuantity< 0)
-
-        {
+        if(newQuantity< 0) {
             throw new SQLException("Insufficient stock for item code: " + itemCode);
         }
 
