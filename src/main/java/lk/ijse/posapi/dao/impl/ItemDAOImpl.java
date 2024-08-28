@@ -4,6 +4,8 @@ import lk.ijse.posapi.dao.custom.ItemDAO;
 import lk.ijse.posapi.entity.Item;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class ItemDAOImpl implements ItemDAO {
     static String UPDATE_ITEM = "UPDATE item SET itemName=?,qtyOnHand=?,unitPrice=? WHERE itemCode=?";
     static String GET_ITEM = "SELECT * FROM item";
     static String DELETE_ITEM = "DELETE FROM item WHERE itemCode=?";
+    static String UPDATE_ITEM_QUANTITY = "UPDATE item SET qtyOnHand = qtyOnHand - ? WHERE itemCode = ?";
+    static String GET_ITEM_ID = "SELECT * FROM item WHERE itemCode = ?";
     @Override
     public boolean save(Item entity, Connection connection) throws SQLException {
         try {
@@ -72,4 +76,34 @@ public class ItemDAOImpl implements ItemDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean updateQuantity(String itemCode, int quantity, Connection connection) throws SQLException {
+        try {
+            var preparedStatement = connection.prepareStatement(UPDATE_ITEM_QUANTITY);
+            preparedStatement.setInt(1, quantity);
+            preparedStatement.setString(2, itemCode);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Item getItemByCode(String itemCode, Connection connection) throws SQLException {
+        var item = new Item();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ITEM_ID)) {
+            preparedStatement.setString(1, itemCode);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    item.setItemCode(resultSet.getString("itemCode"));
+                    item.setItemName(resultSet.getString("itemName"));
+                    item.setQtyOnHand(resultSet.getInt("qtyOnHand"));
+                    item.setUnitPrice(resultSet.getDouble("unitPrice"));
+                }
+            }
+        }
+        return item;
+    }
+
 }
