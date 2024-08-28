@@ -15,7 +15,7 @@ public class OrderDAOImpl implements OrderDAO {
         try {
             var preparedStatement = connection.prepareStatement(SAVE_ORDER);
             preparedStatement.setString(1,entity.getOrderId());
-            preparedStatement.setDate(2, new java.sql.Date(entity.getOrderDate().getTime()));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(String.valueOf(entity.getOrderDate())));
             preparedStatement.setString(3,entity.getCustomerId());
             preparedStatement.setDouble(4,entity.getTotalAmount());
             return preparedStatement.executeUpdate() != 0;

@@ -85,3 +85,11 @@
 18:28:57.037 [http-nio-8081-exec-1] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
 18:41:12.681 [http-nio-8081-exec-1] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
 19:20:34.198 [http-nio-8081-exec-1] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
+22:49:03.552 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+10:04:23.161 [http-nio-8081-exec-2] INFO  l.i.p.controller.CustomerController -- Initializing Customer Controller with call inti method
+10:11:59.278 [http-nio-8081-exec-3] INFO  l.i.posapi.controller.ItemController -- Initializing Item Controller with call inti method
+10:40:33.662 [http-nio-8081-exec-1] INFO  l.i.posapi.controller.ItemController -- Initializing Item Controller with call inti method
+10:41:03.269 [http-nio-8081-exec-5] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
+10:48:31.688 [http-nio-8081-exec-2] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
+10:49:47.925 [http-nio-8081-exec-2] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
+10:54:52.892 [http-nio-8081-exec-2] INFO  l.i.posapi.controller.ItemController -- Initializing Place Order Controller with call inti method
